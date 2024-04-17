@@ -77,12 +77,21 @@ sap.ui.define([
             var oModel = this.getView().getModel();
             oModel.setProperty("/EmployeeId", "");
             oModel.setProperty("/CountryKey", "");
-        }
+        };
+
+        function showPostalCode(oEvent) { 
+            var itemPressed = oEvent.getSource(); 
+            var oContext = itemPressed.getBindingContext(); 
+            var objectContext = oContext.getObject(); 
+            sap.m.MessageToast.show(objectContext.PostalCode); 
+        };
 
         const Main = Controller.extend("logaligroup.employees.controller.MainView", {});
         //Main.prototype.onValidate = myCheck;
         Main.prototype.onInit = onInit;
         Main.prototype.onFilter = onFilter; 
         Main.prototype.onClearFilter = onClearFilter;
+        Main.prototype.showPostalCode = showPostalCode;
+        
         return Main;
     });

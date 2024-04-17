@@ -81,7 +81,11 @@
             "": {
                 "dataSource": "mainService",
                 "preload": true,
-                "settings": {}
+                "settings": {
+                    "defaultBindingMode": "TwoWay",
+                    "defaultCountMode": "Inline",
+                    "refreshAfterChange": false
+                }
             },
             "YSAPUI5_SRV_01": {
                 "dataSource": "YSAPUI5_SRV_01",

@@ -120,7 +120,7 @@ sap.ui.define([
         };
 
         function showOrders(oEvent) {
-            var ordersTable = this.getView().byId("ordersTable");
+            /* var ordersTable = this.getView().byId("ordersTable");
             ordersTable.destroyItems();
             var itemPressed = oEvent.getSource();
             var oContext = itemPressed.getBindingContext("jsonEmployees");
@@ -194,8 +194,28 @@ sap.ui.define([
             };
             newTableJSON.bindAggregation("items", oBindingInfo);
             newTableJSON.bindElement("jsonEmployees>" + oContext.getPath());
-            ordersTable.addItem(newTableJSON);
+            ordersTable.addItem(newTableJSON); */
+
+            //Get selected controller
+            var iconPressed = oEvent.getSource();
+
+            //Context from the model
+            var oContext = iconPressed.getBindingContext("jsonEmployees");
+
+            if (!this._oDialogOrders) {
+                this._oDialogOrders = sap.ui.xmlfragment("logaligroup.employees.fragment.DialogOrders", this);
+                this.getView().addDependent(this._oDialogOrders);
+            };
+
+            //Dialog binding to the Context to have access to the data of selected item
+            this._oDialogOrders.bindElement("jsonEmployees>" + oContext.getPath());
+            this._oDialogOrders.open();
         };
+
+        function onCloseOrders() {
+            this._oDialogOrders.close();
+        }
+
 
         const Main = Controller.extend("logaligroup.employees.controller.MainView", {});
         //Main.prototype.onValidate = myCheck;
@@ -206,6 +226,6 @@ sap.ui.define([
         Main.prototype.onShowCity = onShowCity;
         Main.prototype.onHideCity = onHideCity;
         Main.prototype.showOrders = showOrders;
-
+        Main.prototype.onCloseOrders = onCloseOrders;
         return Main;
     });

@@ -3,4 +3,8 @@
 .sapMFlexItem {
     display: flex !important;
     align-items: center !important;
+};
+
+.boldText {
+    font-weight: bold;
 }

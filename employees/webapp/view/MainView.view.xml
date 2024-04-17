@@ -5,9 +5,9 @@
     <Page id="page" title="{i18n>title}">
         <content>
                <HBox>
-                    <Label id="labelEmployee" text="{i18n>labelEmployee}" class="sapuiSmallMargin" labelFor="inputEmployee"/>
-                    <Input id="inputEmployee" value="{jsonCountries>/EmployeeId}" maxLength="6" width="200px" class="sapUiSmallMarginEnd"/>
-                    <Label id="labelCountry" labelFor="slCountry" text="{i18n>labelCountry}" class="sapUiSmallMargin"/>
+                    <Label id="labelEmployee" text="{i18n>labelEmployee}" class="sapuiSmallMargin sapMFlexItem" labelFor="inputEmployee"/>
+                    <Input id="inputEmployee" value="{jsonCountries>/EmployeeId}" maxLength="6" width="200px" class="sapUiSmallMarginBegin"/>
+                    <Label id="labelCountry" labelFor="slCountry" text="{i18n>labelCountry}" class="sapUiSmallMargin sapMFlexItem"/>
                     <Select id="slCountry" selectedKey="{jsonCountries>/CountryKey}" items="{jsonCountries>/ListCountry}" forceSelection="false">
                         <items>
                             <core:Item key="{jsonCountries>Key}" text="{jsonCountries>Text}"/>

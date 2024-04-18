@@ -15,7 +15,7 @@
                     </Select>
                     <Button id="btnFilter" text="{i18n>btnFilter}" icon="sap-icon://search"
                             press="onFilter" class="sapUiSmalMarginEnd"/>
-                    <Button id="btnClearFilter" text="{i18n>btnFilter}" icon="sap-icon://clear-filter"
+                    <Button id="btnClearFilter" text="{i18n>btnClearFilter}" icon="sap-icon://clear-filter"
                             press="onClearFilter" class="sapUiSmalMarginEnd"/>
                </HBox>
                <core:Fragment fragmentName="logaligroup.employees.fragment.TableEmployee" type="XML"/>

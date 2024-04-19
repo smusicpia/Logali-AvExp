@@ -1,11 +1,13 @@
 sap.ui.define([
     "sap/ui/core/mvc/Controller",
-    "logaligroup/employees/model/formatter"
+    "logaligroup/employees/model/formatter",
+    "sap/m/MessageBox"
 ],
     /**
      * @param {typeof sap.ui.core.mvc.Controller} Controller
+     * @param {typeof sap.m.MessageBox} MessageBox
      */
-    function (Controller, formatter) {
+    function (Controller, formatter, MessageBox) {
         "use strict";
         function onInit() {
             this._bus = sap.ui.getCore().getEventBus();
@@ -17,7 +19,7 @@ sap.ui.define([
             var incidenceModel = this.getView().getModel("incidenceModel");
             var odata = incidenceModel.getData();
             var index = odata.length;
-            odata.push({ index: index + 1});
+            odata.push({ index: index + 1, _ValidateDate: false, EnabledSave: false });
             incidenceModel.refresh();
             newIncidence.bindElement("incidenceModel>/" + index);
             tableIncidence.addContent(newIncidence);
@@ -43,12 +45,17 @@ sap.ui.define([
 
             // Se implementa la logica para eliminar del servicio OData la incidecnia eliminada
             var contextObj = oEvent.getSource().getBindingContext("incidenceModel").getObject();
-            this._bus.publish("incidence", "onDeleteIncidence", {
-                IncidenceId: contextObj.IncidenceId,
-                SapId: contextObj.SapId,
-                EmployeeId: contextObj.EmployeeId
+            MessageBox.confirm(this.getView().getModel("i18n").getResourceBundle().getText("confirmDeleteIncidence"), {
+                onClose: function (oAction) {
+                    if (oAction === "OK") {
+                        this._bus.publish("incidence", "onDeleteIncidence", {
+                            IncidenceId: contextObj.IncidenceId,
+                            SapId: contextObj.SapId,
+                            EmployeeId: contextObj.EmployeeId
+                        });
+                    };
+                }.bind(this)
             });
-
         };
 
         function onSaveIncidence(oEvent) {
@@ -60,17 +67,60 @@ sap.ui.define([
         function updateIncidenceCreationDate(oEvent) {
             var context = oEvent.getSource().getBindingContext("incidenceModel");
             var contextObj = context.getObject();
+            var oResourceBundle = this.getView().getModel("i18n").getResourceBundle();
+            if (!oEvent.getSource().isValidValue()) {
+                contextObj._ValidateDate = false;
+                contextObj.CreationDateState = "Error";
+                MessageBox.error(oResourceBundle.getText("errorCreationDateValue"), {
+                    title: "Error",
+                    onclose: null,
+                    styleClass: "",
+                    actions: MessageBox.Action.Close,
+                    emphasizedAction: null,
+                    initialFocus: null,
+                    textDirection: sap.ui.core.TextDirection.Inherit
+                });
+            } else {
+                contextObj.CreationDateX = true;
+                contextObj._ValidateDate = true;
+                contextObj.CreationDateState = "None"
+            };
+            if (oEvent.getSource().isValidValue() && contextObj.Reason) {
+                contextObj.EnabledSave = true;
+            } else {
+                contextObj.EnabledSave = false;
+            };
+            context.getModel().refresh();
         };
 
         function updateIncidenceReason(oEvent) {
             var context = oEvent.getSource().getBindingContext("incidenceModel");
             var contextObj = context.getObject();
+            if (oEvent.getSource().getValue()) {
+                contextObj.ReasonX = true;
+                contextObj.ReasonState = "None";
+            } else {
+                contextObj.ReasonX = false;
+                contextObj.ReasonState = "Error";
+            };
+            if (contextObj._ValidateDate && oEvent.getSource().getValue()) {
+                contextObj.EnabledSave = true;
+            } else {
+                contextObj.EnabledSave = false;
+            };
+            context.getModel().refresh();
         };
 
         function updateIncidenceType(oEvent) {
             var context = oEvent.getSource().getBindingContext("incidenceModel");
             var contextObj = context.getObject();
+            if (contextObj._ValidateDate && contextObj.Reason) {
+                contextObj.EnabledSave = true;
+            } else {
+                contextObj.EnabledSave = false;
+            };
             contextObj.TypeX = true;
+            context.getModel().refresh();
         };
 
         const MainED = Controller.extend("logaligroup.employees.controller.EmployeeDetails", {});

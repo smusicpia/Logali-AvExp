@@ -4,8 +4,14 @@
   "routes": [
     {
       "source": "^/V2/(.*)$",
-      "target": "/V2/$1",
+      "target": "$1",
       "destination": "Northwind",
+      "authenticationType": "none",
+      "csrfProtection": false
+    },
+    {
+      "source": "^/sap/opu/odata/sap/YSAPUI5_SRV_01/",
+      "destination": "logaligroupERP",
       "authenticationType": "none",
       "csrfProtection": false
     },

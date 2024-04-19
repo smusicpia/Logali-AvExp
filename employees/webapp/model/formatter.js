@@ -11,13 +11,13 @@ sap.ui.define([
             switch (true) {
                 //Today
                 case date.getTime() === dateNowFormat.getTime():
-                    return oResourceBundle.getText("Today");
+                    return oResourceBundle.getText("today");
                 //Tomorrow
                 case date.getTime() === dateNowFormat.getTime() + timeDay:
-                    return oResourceBundle.getText("Tomorrow");
+                    return oResourceBundle.getText("tomorrow");
                 //Yesterday
                 case date.getTime() === dateNowFormat.getTime() - timeDay:
-                    return oResourceBundle.getText("Yesterday");
+                    return oResourceBundle.getText("yesterday");
                 default:
                     return "";
             }

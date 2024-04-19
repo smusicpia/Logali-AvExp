@@ -18,7 +18,7 @@
             <HBox>
                 <VBox class="sapUiSmallMarginEnd">
                     <Label text="{i18n>incidenceDate}" required="true"/>
-                    <DatePicker dateValue="{incidenceModel>CreationDate}" change="updateIncidenceCreationDate" valueState="incidenceModel>CreationDateState"/>
+                    <DatePicker dateValue="{incidenceModel>CreationDate}" change="updateIncidenceCreationDate" valueState="{incidenceModel>CreationDateState}"/>
                 </VBox>
                 <VBox visible="{= ${incidenceModel>CreationDate} !== '' &amp;&amp; ${incidenceModel>CreationDate} !== undefined}" class="sapUiSmallMarginEnd">
                     <Label text="{i18n>incidenceReason}" required="true"/>

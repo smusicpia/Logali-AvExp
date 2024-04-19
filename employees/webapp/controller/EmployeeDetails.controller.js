@@ -123,6 +123,14 @@ sap.ui.define([
             context.getModel().refresh();
         };
 
+        function toOrderDetails(oEvent) {
+            var orderID = oEvent.getSource().getBindingContext("odataNorthwind").getObject().OrderID;
+            var oRouter = sap.ui.core.UIComponent.getRouterFor(this);
+            oRouter.navTo("RouteOrderDetails", {
+                OrderID : orderID
+            });
+        }
+
         const MainED = Controller.extend("logaligroup.employees.controller.EmployeeDetails", {});
         MainED.prototype.onInit = onInit;
         MainED.prototype.onCreateIncidence = onCreateIncidence;
@@ -132,6 +140,7 @@ sap.ui.define([
         MainED.prototype.updateIncidenceCreationDate = updateIncidenceCreationDate;
         MainED.prototype.updateIncidenceReason = updateIncidenceReason;
         MainED.prototype.updateIncidenceType = updateIncidenceType;
+        MainED.prototype.toOrderDetails = toOrderDetails;
 
         return MainED;
     });

@@ -129,7 +129,7 @@ sap.ui.define([
                 OrderID : orderID
             });
         } */
-
+        
         const MainED = Base.extend("logaligroup.employees.controller.EmployeeDetails", {});
         MainED.prototype.onInit = onInit;
         MainED.prototype.onCreateIncidence = onCreateIncidence;
